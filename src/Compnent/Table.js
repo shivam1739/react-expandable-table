@@ -1,15 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TableHead from "./TableHead";
 import TableRow from "./TableRow";
-import {
-  Table,
-  TableContainer,
-  Tbody,
-  Tr,
-  Td,
-  Thead,
-  Th,
-} from "@chakra-ui/react";
+import { Table, TableContainer, Tbody, Tr, Thead, Th } from "@chakra-ui/react";
 import Total from "./Total";
 
 const Tables = ({ data }) => {
@@ -37,7 +29,7 @@ const Tables = ({ data }) => {
 
     setTotal(sum);
     setMonthlyData(indicators);
-  }, []);
+  }, [data]);
 
   return (
     <TableContainer m="1rem 0" border="2px" borderColor="gray.200">

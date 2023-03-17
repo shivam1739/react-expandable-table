@@ -129,7 +129,7 @@ export default function Analysis(params) {
           rounded="md"
           shadow="md"
         >
-          {selectedValue == "quatrly"
+          {selectedValue === "quatrly"
             ? quatrly.map((data) => <Tables data={data} />)
             : null}
         </section>
