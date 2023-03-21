@@ -4,84 +4,106 @@ import Tables from "./Table";
 import { ScaleFade } from "@chakra-ui/react";
 const data = [
   {
-    month: "January",
-    indicators: [
-      { name: "revenue", value: 10000 },
-      { name: "expenses", value: 8000 },
-    ],
-  },
-  {
-    month: "February",
+    month: "February-22",
     indicators: [
       { name: "revenue", value: 12000 },
       { name: "expenses", value: 10000 },
     ],
   },
   {
-    month: "March",
+    month: "February-23",
+    indicators: [
+      { name: "revenue", value: 12000 },
+      { name: "expenses", value: 10000 },
+    ],
+  },
+  {
+    month: "March-23",
     indicators: [
       { name: "revenue", value: 9000 },
       { name: "expenses", value: 7000 },
     ],
   },
   {
-    month: "April",
+    month: "April-23",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
     ],
   },
   {
-    month: "May",
+    month: "May-23",
     indicators: [
       { name: "revenue", value: 8000 },
       { name: "expenses", value: 6000 },
     ],
   },
   {
-    month: "June",
+    month: "June-23",
     indicators: [
       { name: "revenue", value: 14000 },
       { name: "expenses", value: 12000 },
     ],
   },
   {
-    month: "July",
+    month: "July-23",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
     ],
   },
   {
-    month: "August",
+    month: "August-23",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
     ],
   },
   {
-    month: "September",
+    month: "September-23",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
     ],
   },
   {
-    month: "October",
+    month: "October-23",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
     ],
   },
   {
-    month: "November",
+    month: "November-23",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
     ],
   },
   {
-    month: "December",
+    month: "December-23",
+    indicators: [
+      { name: "revenue", value: 11000 },
+      { name: "expenses", value: 9000 },
+    ],
+  },
+
+  {
+    month: "January-24",
+    indicators: [
+      { name: "revenue", value: 11000 },
+      { name: "expenses", value: 9000 },
+    ],
+  },
+  {
+    month: "February-24",
+    indicators: [
+      { name: "revenue", value: 11000 },
+      { name: "expenses", value: 9000 },
+    ],
+  },
+  {
+    month: "March-24",
     indicators: [
       { name: "revenue", value: 11000 },
       { name: "expenses", value: 9000 },
@@ -90,22 +112,61 @@ const data = [
 ];
 
 export default function Analysis(params) {
-  const [quatrly, setQuatrly] = useState([]);
+  const [quarterly, setQuarterly] = useState([]);
   const [selectedValue, setSelectedValue] = useState("");
   useEffect(() => {
     let q = [];
     let i = 0;
     while (i < data.length) {
       let ans = [];
-      let j = 1;
-      while (j < 4) {
-        ans.push(data[i++]);
-        j++;
+      let no = "";
+      let year = data[i].month.substring(data[i].month.length - 2);
+      while (true) {
+        if (data[i]) {
+          no = monthToNumber(data[i].month.slice(0, data[i].month.length - 3));
+          ans.push(data[i++]);
+          if (no % 3 === 0 || !data[i].month.includes(year)) {
+            break;
+          }
+          year = data[i].month.substring(data[i].month.length - 2);
+        }
+        // console.log(ans);
       }
+
       q.push(ans);
     }
-    setQuatrly(q);
+    setQuarterly(q);
   }, []);
+  function monthToNumber(mon) {
+    switch (mon) {
+      case "January":
+        return 1;
+      case "February":
+        return 2;
+      case "March":
+        return 3;
+      case "April":
+        return 4;
+      case "May":
+        return 5;
+      case "June":
+        return 6;
+      case "July":
+        return 7;
+      case "August":
+        return 8;
+      case "September":
+        return 9;
+      case "October":
+        return 10;
+      case "November":
+        return 11;
+      case "December":
+        return 12;
+      default:
+        return 0;
+    }
+  }
   return (
     <div>
       <section>
@@ -130,7 +191,7 @@ export default function Analysis(params) {
           shadow="md"
         >
           {selectedValue === "quatrly"
-            ? quatrly.map((data) => <Tables data={data} />)
+            ? quarterly.map((data, idx) => <Tables data={data} key={idx} />)
             : null}
         </section>
       </ScaleFade>

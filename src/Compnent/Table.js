@@ -45,21 +45,21 @@ const Tables = ({ data }) => {
           </Tr>
         </Thead>
         <Tbody>
-          {Object.keys(monthlyData).map((item) => {
+          {Object.keys(monthlyData).map((item, idx) => {
             return (
-              <Tr>
+              <Tr key={idx}>
                 <Th minW="6rem" maxW="6rem">
                   {item}
                 </Th>
-                {monthlyData[item].map((item) => (
-                  <TableRow props={item} />
+                {monthlyData[item].map((item, idx) => (
+                  <TableRow props={item} key={idx} />
                 ))}
               </Tr>
             );
           })}
-          {Object.keys(total).map((item) => {
+          {Object.keys(total).map((item, idx) => {
             return (
-              <Tr>
+              <Tr key={idx}>
                 <Th minW="6rem" maxW="6rem">
                   {`Σ ${item}`}
                 </Th>
