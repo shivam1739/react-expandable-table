@@ -8,7 +8,6 @@ const Tables = ({ data }) => {
   const [tableHead, setTableHead] = useState([]);
   const [monthlyData, setMonthlyData] = useState([]);
   const [total, setTotal] = useState({});
-
   useEffect(() => {
     setTableHead(data.map((items) => items.month));
 

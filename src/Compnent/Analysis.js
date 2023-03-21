@@ -80,13 +80,6 @@ const data = [
       { name: "expenses", value: 9000 },
     ],
   },
-  {
-    month: "December-23",
-    indicators: [
-      { name: "revenue", value: 11000 },
-      { name: "expenses", value: 9000 },
-    ],
-  },
 
   {
     month: "January-24",
@@ -117,6 +110,8 @@ export default function Analysis(params) {
   useEffect(() => {
     let q = [];
     let i = 0;
+
+    // for quatrly data ==========================================
     while (i < data.length) {
       let ans = [];
       let no = "";
@@ -135,6 +130,7 @@ export default function Analysis(params) {
 
       q.push(ans);
     }
+
     setQuarterly(q);
   }, []);
   function monthToNumber(mon) {
@@ -170,6 +166,7 @@ export default function Analysis(params) {
   return (
     <div>
       <section>
+        {/* {Object.keys(yearlyData).map((item) => <Tables data={yearlyData[item]}/>))} */}
         <Tables data={data} />
       </section>
       <section>
