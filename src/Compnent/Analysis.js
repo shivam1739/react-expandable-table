@@ -1,5 +1,5 @@
 import { Select } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Tables from "./Table";
 import { ScaleFade } from "@chakra-ui/react";
 const data = [
@@ -105,25 +105,28 @@ const data = [
 ];
 
 export default function Analysis(params) {
+  const [inputData, setInputData] = useState(data);
+
   const [quarterly, setQuarterly] = useState([]);
-  const [selectedValue, setSelectedValue] = useState("");
+  const [qtrToggle, setQtr] = useState(false);
   useEffect(() => {
     let q = [];
     let i = 0;
-
     // for quatrly data ==========================================
-    while (i < data.length) {
+    while (i < inputData.length) {
       let ans = [];
       let no = "";
-      let year = data[i].month.substring(data[i].month.length - 2);
+      let year = inputData[i].month.substring(inputData[i].month.length - 2);
       while (true) {
-        if (data[i]) {
-          no = monthToNumber(data[i].month.slice(0, data[i].month.length - 3));
-          ans.push(data[i++]);
-          if (no % 3 === 0 || !data[i].month.includes(year)) {
+        if (inputData[i]) {
+          no = monthToNumber(
+            inputData[i].month.slice(0, inputData[i].month.length - 3)
+          );
+          ans.push(inputData[i++]);
+          if (no % 3 === 0 || !inputData[i].month.includes(year)) {
             break;
           }
-          year = data[i].month.substring(data[i].month.length - 2);
+          year = inputData[i].month.substring(inputData[i].month.length - 2);
         }
         // console.log(ans);
       }
@@ -132,7 +135,8 @@ export default function Analysis(params) {
     }
 
     setQuarterly(q);
-  }, []);
+  }, [inputData]);
+
   function monthToNumber(mon) {
     switch (mon) {
       case "January":
@@ -167,18 +171,17 @@ export default function Analysis(params) {
     <div>
       <section>
         {/* {Object.keys(yearlyData).map((item) => <Tables data={yearlyData[item]}/>))} */}
-        <Tables data={data} />
+        <Tables
+          data={inputData}
+          setInputData={setInputData}
+          qtrToggle={qtrToggle}
+          setQtr={setQtr}
+        />
       </section>
       <section>
-        <Select
-          width="100%"
-          placeholder="Select option"
-          onChange={(e) => setSelectedValue(e.target.value)}
-        >
-          <option value="quatrly">Quatrly</option>
-        </Select>
+        <button onClick={() => setQtr(!qtrToggle)}>Show quarterly data</button>
       </section>
-      <ScaleFade initialScale={0.2} in={selectedValue}>
+      <ScaleFade initialScale={0.2} in={qtrToggle}>
         <section
           p="40px"
           color="white"
@@ -187,7 +190,7 @@ export default function Analysis(params) {
           rounded="md"
           shadow="md"
         >
-          {selectedValue === "quatrly"
+          {qtrToggle
             ? quarterly.map((data, idx) => <Tables data={data} key={idx} />)
             : null}
         </section>
